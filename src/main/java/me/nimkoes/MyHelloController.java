@@ -9,6 +9,7 @@ public class MyHelloController {
 
     @GetMapping("/hello")
     public String hello(@RequestParam("name") Person person) {
+        System.out.println("handler method execute !!");
         return "hello " + person.getName();
     }
 
