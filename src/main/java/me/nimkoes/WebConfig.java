@@ -1,14 +1,25 @@
 package me.nimkoes;
 
 import java.util.concurrent.TimeUnit;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public Jaxb2Marshaller jaxb2Marshaller() {
+        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+
+        // jaxb 에서 사용하는 @XmlRootElement annotation 의 위치를 알려줘야 변환이 가능하다.
+        jaxb2Marshaller.setPackagesToScan(Person.class.getPackage().getName());
+        return jaxb2Marshaller;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
