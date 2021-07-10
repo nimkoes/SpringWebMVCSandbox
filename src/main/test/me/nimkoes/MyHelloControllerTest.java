@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,12 +24,32 @@ public class MyHelloControllerTest {
 
         mockMvc.perform(
                 get("/hello")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.TEXT_PLAIN)
+                .header(HttpHeaders.AUTHORIZATION,"4321")
             )
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().string("hello"))
+        ;
+
+        mockMvc.perform(
+                get("/hi")
+                .header(HttpHeaders.AUTHORIZATION,"1234")
+            )
+            .andDo(print())
+            .andExpect(status().isNotFound())
+        ;
+
+        mockMvc.perform(get("/hi"))
+            .andDo(print())
+            .andExpect(status().isOk())
+        ;
+
+        mockMvc.perform(
+                get("/helloParam")
+                .param("test", "1234")
+            )
+            .andDo(print())
+            .andExpect(status().isOk())
         ;
 
     }
