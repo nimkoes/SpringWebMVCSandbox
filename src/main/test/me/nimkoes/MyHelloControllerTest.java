@@ -1,8 +1,8 @@
 package me.nimkoes;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,14 +21,10 @@ public class MyHelloControllerTest {
     @Test
     public void helloTest() throws Exception {
 
-        mockMvc.perform(head("/hello"))
+        mockMvc.perform(get("/hello"))
             .andDo(print())
             .andExpect(status().isOk())
-        ;
-
-        mockMvc.perform(options("/hello"))
-            .andDo(print())
-            .andExpect(status().isOk())
+            .andExpect(content().string("hello"))
         ;
 
     }
