@@ -2,8 +2,7 @@ package me.nimkoes;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,11 @@ public class MyHelloControllerTest {
     @Test
     public void helloTest() throws Exception {
 
-        mockMvc.perform(get("/hello"))
+        mockMvc.perform(get("/hello/2321;name=nimkoes"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().string("hello"))
+            .andExpect(jsonPath("id").value(2321))
+            .andExpect(jsonPath("name").value("nimkoes"))
         ;
 
     }
