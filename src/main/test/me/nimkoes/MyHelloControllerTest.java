@@ -2,6 +2,7 @@ package me.nimkoes;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +21,10 @@ public class MyHelloControllerTest {
     @Test
     public void helloTest() throws Exception {
 
-        mockMvc.perform(get("/hello"))
+        mockMvc.perform(get("/hello/1234"))
             .andDo(print())
             .andExpect(status().isOk())
+            .andExpect(jsonPath("id").value(1234))
         ;
 
     }
